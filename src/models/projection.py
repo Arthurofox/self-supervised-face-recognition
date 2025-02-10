@@ -1,15 +1,16 @@
 import torch.nn as nn
-import torchvision.models as models
 
-class ArcFaceBackbone(nn.Module):
+class ProjectionHead(nn.Module):
     """
-    ArcFace Backbone using a pre-trained ResNet50.
+    MLP projection head for contrastive learning.
     """
-    def __init__(self, embedding_size=512):
-        super(ArcFaceBackbone, self).__init__()
-        self.backbone = models.resnet50(pretrained=True)
-        in_features = self.backbone.fc.in_features
-        self.backbone.fc = nn.Linear(in_features, embedding_size)
+    def __init__(self, input_dim, hidden_dim=512, output_dim=128):
+        super(ProjectionHead, self).__init__()
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.ReLU(inplace=True),
+            nn.Linear(hidden_dim, output_dim)
+        )
 
     def forward(self, x):
-        return self.backbone(x)
+        return self.net(x)

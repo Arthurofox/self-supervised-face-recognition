@@ -13,6 +13,7 @@ from models.arcface import ArcFaceBackbone
 from models.projection import ProjectionHead
 from models.simclr import SimCLRModel
 
+
 def nt_xent_loss(z, temperature=TEMPERATURE):
     """
     Normalized Temperature-scaled Cross Entropy Loss.

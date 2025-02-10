@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from mtcnn import MTCNN
-from src.config import FRAMES_DIR, FACES_DIR, IMAGE_SIZE
+from config import FRAMES_DIR, FACES_DIR, IMAGE_SIZE
 
 def capture_frames():
     """

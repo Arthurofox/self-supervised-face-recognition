@@ -1,7 +1,13 @@
-torch>=1.8.0
-torchvision>=0.9.0
-mtcnn
-numpy
-opencv-python
-Pillow
-tensorflow
+--find-links https://download.pytorch.org/whl/torch_stable.html
+torch==2.6.0
+torchvision==0.21.0
+mtcnn>=0.1.1
+numpy>=1.24.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+tensorflow-macos>=2.15.0  # Specific for Mac
+tensorflow-metal>=1.1.0   # Metal plugin for TensorFlow
+boto3>=1.34.0
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+psutil

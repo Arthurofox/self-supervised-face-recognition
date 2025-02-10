@@ -15,5 +15,21 @@ TEMPERATURE = 0.5
 # Image parameters
 IMAGE_SIZE = (112, 112)
 
-# Device configuration
-DEVICE = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+def get_optimal_device():
+    if torch.backends.mps.is_available():
+        # For newer PyTorch versions, check if MPS is properly built
+        if torch.backends.mps.is_built():
+            try:
+                # Test MPS by creating a small tensor
+                torch.zeros(1).to('mps')
+                return torch.device("mps")
+            except Exception:
+                print("MPS (Metal) is available but not working properly")
+        
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+        
+    return torch.device("cpu")
+
+# Use this instead of your current DEVICE definition
+DEVICE = get_optimal_device()

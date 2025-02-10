@@ -8,3 +8,4 @@ build/
 frames/
 faces/
 *venv
+*.env

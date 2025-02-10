@@ -11,9 +11,10 @@ from tqdm import tqdm
 import psutil
 import numpy as np
 from pathlib import Path
+from torch.optim.lr_scheduler import OneCycleLR
 
 from config import (
-    FACES_DIR, NUM_EPOCHS, BATCH_SIZE, LEARNING_RATE, TEMPERATURE,
+    FACES_DIR, NUM_EPOCHS, BATCH_SIZE, LEARNING_RATE, TEMPERATURE, SCHEDULER_CONFIG, 
     DEVICE, IMAGE_SIZE, MODEL_SAVE_PATH
 )
 from models.arcface import ArcFaceBackbone
@@ -163,12 +164,16 @@ def train_model(args):
            print(f"torch.compile not available: {e}")
 
    optimizer = optim.Adam(model.parameters(), lr=args.lr)
-   scheduler = optim.lr_scheduler.OneCycleLR(
-       optimizer, 
-       max_lr=args.lr,
-       epochs=args.epochs,
-       steps_per_epoch=len(dataloader)
-   )
+   
+   
+   scheduler = OneCycleLR(
+        optimizer,
+        max_lr=args.lr,
+        epochs=args.epochs,
+        steps_per_epoch=len(dataloader),
+        **SCHEDULER_CONFIG['params']
+    )
+
 
    # Disable mixed precision for MPS
    use_amp = DEVICE.type == 'cuda'  # Only use AMP with CUDA

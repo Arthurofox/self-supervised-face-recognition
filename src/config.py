@@ -7,10 +7,20 @@ FACES_DIR = os.path.join(os.getcwd(), "faces")
 MODEL_SAVE_PATH = os.path.join(os.getcwd(), "simclr_arcface_finetuned.pth")
 
 # Training hyperparameters
-NUM_EPOCHS = 25
+NUM_EPOCHS = 30
 BATCH_SIZE = 32
 LEARNING_RATE = 1e-3
-TEMPERATURE = 0.5
+TEMPERATURE = 0.1
+
+# Scheduler config
+SCHEDULER_CONFIG = {
+    'name': 'OneCycleLR',
+    'params': {
+        'pct_start': 0.1,        # 10% warmup period
+        'div_factor': 10,        # Initial learning rate = max_lr/10
+        'final_div_factor': 100, # Final learning rate = max_lr/1000
+    }
+}
 
 # Image parameters
 IMAGE_SIZE = (112, 112)

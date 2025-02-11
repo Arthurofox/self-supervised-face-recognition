@@ -9,3 +9,5 @@ frames/
 faces/
 *venv
 *.env
+*.DS_Store
+*datasets/
